@@ -37,23 +37,21 @@ def main():
     result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
                                 range=SAMPLE_RANGE_NAME).execute()
     values = result.get('values', [])
-
     if not values:
         print('No data found.')
     # else:
     #     for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
             #print('%s, %s' % (row[0], row[4]))
-
     print(values)
 
     #adicionar ou atualizar
     valores_adicionar = [
         ["Cima", "001"],
-        ["Nat", "002"]
+        ["Nat", "002"],
     ]
     result = sheet.values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                range='Página1!A2:B2', valueInputOption='USER_ENTERED',
+                                range='Página1!A2', valueInputOption='USER_ENTERED',
                                    body={'values': valores_adicionar}).execute()
 
 if __name__ == '__main__':
