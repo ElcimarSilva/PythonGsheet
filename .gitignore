@@ -1,0 +1,7 @@
+# created by virtualenv automatically
+/bin
+/lib
+credentials.json
+pyvenv.cfg
+token.json
+.idea/
