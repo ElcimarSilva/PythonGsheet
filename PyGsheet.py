@@ -49,10 +49,15 @@ def main():
         print("Valores existentes na planilha ",chama_planilha())
 
         def insere_na_planilha():
-            valores_adicionar = [
-                ["Cima", "001"],
-                ["Nat", "002"],
+            listas = [
+                ["Cima", "001", "002", "003", "004"],
+                ["Cima", "001", "002", "003", "004"],
+                ["Cima", "001", "002", "003", "004"]
             ]
+            while len(listas) < 5:
+                listas.append(['GO'])
+
+            valores_adicionar = listas
 
             result = sheet.values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID,
                                     range='Página1!A2', valueInputOption='USER_ENTERED',
