@@ -31,6 +31,8 @@ def main():
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
 
+
+
     try:
         service = build('sheets', 'v4', credentials=creds)
 
@@ -40,24 +42,25 @@ def main():
             result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
                                         range=SAMPLE_RANGE_NAME).execute()
             values = result.get('values', [])
-
             if not values:
                 print('No data found.')
             return values
+            
+        print("Valores existentes na planilha ",chama_planilha())
 
-        print(chama_planilha())
+        def insere_na_planilha():
+            valores_adicionar = [
+                ["Cima", "001"],
+                ["Nat", "002"],
+            ]
 
-        
-        valores_adicionar = [
-            ["Cima", "001"],
-            ["Nat", "002"],
-        ]
+            result = sheet.values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                                    range='Página1!A2', valueInputOption='USER_ENTERED',
+                                    body={'values': valores_adicionar}).execute()
+            print("Dados inseridos com sucesso!")                        
 
-        result = sheet.values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                range='Página1!A2', valueInputOption='USER_ENTERED',
-                                   body={'values': valores_adicionar}).execute()
-        
-        print(chama_planilha())
+        insere_na_planilha()
+        print("Planilha atualizada",chama_planilha())
 
     except HttpError as err:
         print(err)
