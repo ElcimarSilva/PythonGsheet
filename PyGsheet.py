@@ -6,6 +6,10 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+import time
+from datetime import datetime
+import pytz
+
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
@@ -49,13 +53,18 @@ def main():
         print("Valores existentes na planilha ",chama_planilha())
 
         def insere_na_planilha():
-            listas = [
-                ["Cima", "001", "002", "003", "004"],
-                ["Cima", "001", "002", "003", "004"],
-                ["Cima", "001", "002", "003", "004"]
-            ]
-            while len(listas) < 5:
-                listas.append(['GO'])
+            listas = []
+
+            minuto = 0
+            linha = ["Cima", "01", "02", "03", 4]
+
+            while minuto < 13: # para a execução no munito especificado
+                data_hora_atual = datetime.now(pytz.timezone('America/Sao_Paulo'))
+                minuto = data_hora_atual.minute
+                listas.insert(0, linha) # insere uma linha de dado para ser enviado
+                print("Inserindo dados ", "minuto: ", minuto, "linha:", linha)
+                time.sleep(2)
+
 
             valores_adicionar = listas
 
