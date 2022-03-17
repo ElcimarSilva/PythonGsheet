@@ -56,12 +56,12 @@ def main():
                 ["100.0", "200", "300"],  # primeira linha
                 ["400", "500", "600"],  # segunda linha
             ]
-            lista = le_csv.retorna_csv_coluna()
+            lista = le_csv.retorna_csv_linha()
 
             valores_adicionar = lista
 
-            result = sheet.values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                           range='Página1!A2', valueInputOption='USER_ENTERED',
+            result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, # append insere nova linha update atua..
+                                           range='Página1!A1', valueInputOption='USER_ENTERED',
                                            body={'values': valores_adicionar}).execute()
             print("Dados inseridos com sucesso!")
 

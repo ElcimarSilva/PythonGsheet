@@ -1,3 +1,5 @@
+from datetime import datetime
+import pytz
 import pandas as pd
 from IPython.core.display_functions import display
 
@@ -17,6 +19,8 @@ def retorna_csv_coluna():
 
 def retorna_csv_linha():
     lista_eficiencia_robo = []
+    data = str(datetime.now(pytz.timezone('America/Sao_Paulo')))
+    lista_eficiencia_robo.append(data)
     for item in eficiencia_robo:
         lista_eficiencia_robo.append(str(item))
 
