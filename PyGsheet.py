@@ -9,6 +9,7 @@ from googleapiclient.errors import HttpError
 import time
 from datetime import datetime
 import pytz
+import le_csv
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -35,8 +36,6 @@ def main():
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
 
-
-
     try:
         service = build('sheets', 'v4', credentials=creds)
 
@@ -49,32 +48,22 @@ def main():
             if not values:
                 print('No data found.')
             return values
-            
-        print("Valores existentes na planilha ",chama_planilha())
+
+        print("Valores existentes na planilha ", chama_planilha())
 
         def insere_na_planilha():
             listas = []
+            lista = le_csv.retorna_csv_coluna()
 
-            minuto = 0
-            linha = ["Cima", "01", "02", "03", 4]
-
-            while minuto < 13: # para a execução no munito especificado
-                data_hora_atual = datetime.now(pytz.timezone('America/Sao_Paulo'))
-                minuto = data_hora_atual.minute
-                listas.insert(0, linha) # insere uma linha de dado para ser enviado
-                print("Inserindo dados ", "minuto: ", minuto, "linha:", linha)
-                time.sleep(2)
-
-
-            valores_adicionar = listas
+            valores_adicionar = lista
 
             result = sheet.values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                    range='Página1!A2', valueInputOption='USER_ENTERED',
-                                    body={'values': valores_adicionar}).execute()
-            print("Dados inseridos com sucesso!")                        
+                                           range='Página1!A2', valueInputOption='USER_ENTERED',
+                                           body={'values': valores_adicionar}).execute()
+            print("Dados inseridos com sucesso!")
 
         insere_na_planilha()
-        print("Planilha atualizada",chama_planilha())
+        print("Planilha atualizada", chama_planilha())
 
     except HttpError as err:
         print(err)
