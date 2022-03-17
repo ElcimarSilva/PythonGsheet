@@ -6,9 +6,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-import time
-from datetime import datetime
-import pytz
 import le_csv
 
 # If modifying these scopes, delete the file token.json.
@@ -47,26 +44,21 @@ def main():
             values = result.get('values', [])
             if not values:
                 print('No data found.')
-            return values
-
-        print("Valores existentes na planilha ", chama_planilha())
+            return "planilha: ",values
 
         def insere_na_planilha():
             modelo_lista = [
                 ["100.0", "200", "300"],  # primeira linha
                 ["400", "500", "600"],  # segunda linha
             ]
-            lista = le_csv.retorna_csv_linha()
 
-            valores_adicionar = lista
-
+            insere_linha = le_csv.retorna_linha_csv()
             result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, # append insere nova linha update atua..
                                            range='Página1!A1', valueInputOption='USER_ENTERED',
-                                           body={'values': valores_adicionar}).execute()
+                                           body={'values': insere_linha}).execute()
             print("Dados inseridos com sucesso!")
 
         insere_na_planilha()
-        print("Planilha atualizada", chama_planilha())
 
     except HttpError as err:
         print(err)
