@@ -16,9 +16,11 @@ def retorna_csv_coluna():
 
 
 def retorna_csv_linha():
-    lista_eficiencia_robo = list(eficiencia_robo)
-    # precisa cada item ser uma string dentro da lista
-    return lista_eficiencia_robo
+    lista_eficiencia_robo = []
+    for item in eficiencia_robo:
+        lista_eficiencia_robo.append(str(item))
+
+    return [lista_eficiencia_robo]
 
 
 print(retorna_csv_linha())

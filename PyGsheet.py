@@ -52,7 +52,10 @@ def main():
         print("Valores existentes na planilha ", chama_planilha())
 
         def insere_na_planilha():
-            listas = []
+            modelo_lista = [
+                ["100.0", "200", "300"],  # primeira linha
+                ["400", "500", "600"],  # segunda linha
+            ]
             lista = le_csv.retorna_csv_coluna()
 
             valores_adicionar = lista
